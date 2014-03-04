@@ -3,27 +3,26 @@ var Seriously = require('./lib/seriously');
 window.Seriously = Seriously;
 require('./lib/sources/seriously.camera.js');
 require('./lib/effects/seriously.edge.js');
-require('./lib/effects/seriously.blend.js');
 require('./lib/effects/seriously.tvglitch.js');
 require('./lib/effects/seriously.hue-saturation.js');
-//require('./lib/effects/seriously.color.js');
+
+var random = require('expact-random');
+
+//var pModel = require('./lib/model_pca_20_svm');
+//var clm = require('./lib/clmtrackr');
+//var ctrack = new clm.tracker({useWebGL: false});
+//ctrack.init(pModel);
 
 var seriously = new Seriously();
 
-//var source = seriously.source('camera');
 var videoSource = document.getElementById('video');
 var target = seriously.target('#target');
 
 var invasion = {
-  blend: seriously.effect('blend'),
   tv: seriously.effect('tvglitch'),
   blackwhite: seriously.effect('hue-saturation')
 };
-//invasion.blend.top = chroma;
-//invasion.blend.bottom = images.curtain;
-//invasion.blackwhite.source = invasion.blend;
 invasion.blackwhite.saturation = -1;
-
 invasion.tv.source = invasion.blackwhite;
 invasion.tv.distortion = 0.03;
 invasion.tv.verticalSync = 0;
@@ -34,17 +33,11 @@ invasion.tv.frameShape = 0;
 invasion.tv.frameLimit = 0;
 invasion.tv.bars = 0.03;
 
-/*
-var color = seriously.effect('color');
-color.color = "#e50000";
-color.source = invasion.tv;
-*/
-// Connect node in the right order
-//edge.source = source;
-
 function resize() {
   target.width = videoSource.videoWidth;
   target.height = videoSource.videoHeight;
+
+  //ctrack.start(videoSource);
 }
 
 getUserMedia({video: true}, function (err, stream) {
@@ -58,6 +51,7 @@ getUserMedia({video: true}, function (err, stream) {
   if (videoSource.videoWidth) {
     resize();
   }
+
   videoSource.onloadedmetadata = videoSource.onplay = resize;
   invasion.blackwhite.source = videoSource;
   //invasion.tv.source = videoSource;
@@ -66,11 +60,43 @@ getUserMedia({video: true}, function (err, stream) {
   //target.source = color.source;
 });
 
+/*
+function draw() {
+  window.requestAnimationFrame(draw);
+  var positions = ctrack.getCurrentPosition();
+  //console.log(positions);
+}
+draw();
+*/
+
 seriously.go();
 
-console.log('go');
+var aimEl = document.getElementById('crosshair');
+var canvasEle = document.getElementById('target');
 
+var zooms = [
+  '100%',
+  '120%',
+  '150%',
+  '100%',
+  '100%',
+];
 
+var crosshairs = [
+  'Aim.png',
+  'Aim_4.png',
+  'Aim_5.png',
+  'Aim_6.png',
+];
+function swap() {
+  aimEl.src = crosshairs[random.randomInt(0, crosshairs.length - 1)];
+  canvasEle.style.width = zooms[random.randomInt(0, zooms.length - 1)];
 
+  window.setTimeout(swap, random.randomInt(1000, 5000));
+}
+
+swap();
+
+//console.log('go');
 
 

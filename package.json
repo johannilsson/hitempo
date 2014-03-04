@@ -14,6 +14,7 @@
   "dependencies": {
     "express": "~3.4.8",
     "logfmt": "~0.21.0",
-    "getusermedia": "~0.2.2"
+    "getusermedia": "~0.2.2",
+    "expact-random": "~1.0.0"
   }
 }
