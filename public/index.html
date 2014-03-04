@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<style>
+  body {
+    overflow: hidden;
+  }
+  #video {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 150px;
+    z-index: 20;
+  }
+  #target {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  #grid, #crosshair {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+</style>
+<body>
+  <canvas id="target" width="640" height="480"></canvas>
+  <video id="video"></video>
+  <img id="crosshair" src="/Aim.png">
+  <img id="grid" src="/Grid.png">
+  <script src="app.js"></script>
+</body>
+</html>
+
+
+
