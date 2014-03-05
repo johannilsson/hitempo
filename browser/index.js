@@ -91,6 +91,7 @@ var crosshairs = [
 function swap() {
   aimEl.src = crosshairs[random.randomInt(0, crosshairs.length - 1)];
   canvasEle.style.width = zooms[random.randomInt(0, zooms.length - 1)];
+  canvasEle.style.height = zooms[random.randomInt(0, zooms.length - 1)];
 
   window.setTimeout(swap, random.randomInt(1000, 5000));
 }
